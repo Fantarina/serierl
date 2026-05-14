@@ -1,0 +1,14 @@
+{application, serierl,
+ [{description, "An Erlang equivalent to PySerial"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {serierl_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+  {licenses, ["Apache-2.0"]},
+  {links, [{"GitHub", "https://github.com/Fantarina/serierl"}]}
+ ]}.
