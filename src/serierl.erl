@@ -274,6 +274,17 @@ handle_call({open, PortName, Opts}, From, #state{pending_ack = undefined} = Stat
     },
     {noreply, NewState};
 
+%% --- Guards for closed port ---
+handle_call({write, _}, _From, #state{is_open = false} = State) ->
+    {reply, {error, not_open}, State};
+handle_call({modem_set, _, _}, _From, #state{is_open = false} = State) ->
+    {reply, {error, not_open}, State};
+handle_call({buffer_op, _}, _From, #state{is_open = false} = State) ->
+    {reply, {error, not_open}, State};
+handle_call(get_signals, _From, #state{is_open = false} = State) ->
+    {reply, {error, not_open}, State};
+
+
 handle_call({write, Data}, From, #state{pending_ack = undefined} = State) ->
     %% FIX: write now waits for a C-side ack so errors are no longer silently
     %% dropped. The C port sends <<0>> on success, <<1, Reason/binary>> on failure.
@@ -331,28 +342,22 @@ handle_call({read_until, Expected}, From, State = #state{opts = Opts}) ->
     NewState = State#state{pending_read = {From, TimerRef, {until, Expected}}},
     {noreply, process_pending_read(NewState)};
 
-handle_call(close, _From, State) ->
-    %% Send close command to C port so it releases the serial fd cleanly.
+handle_call(close, From, #state{pending_ack = undefined} = State) ->
     port_command(State#state.port, <<3:8>>),
     %% Unblock any pending read caller.
     case State#state.pending_read of
-        {WaitingFrom, TimerRef, _} ->
-            erlang:cancel_timer(TimerRef),
+        {WaitingFrom, ReadTimer, _} ->
+            erlang:cancel_timer(ReadTimer),
             gen_server:reply(WaitingFrom, {error, closed});
         undefined -> ok
     end,
-    %% Cancel any in-flight ack waiter.
-    case State#state.pending_ack of
-        {AckFrom, AckTimer, _} ->
-            erlang:cancel_timer(AckTimer),
-            gen_server:reply(AckFrom, {error, closed});
-        undefined -> ok
-    end,
-    {reply, ok, State#state{
+    %% Wait for the C port to ack the close
+    AckTimer = erlang:send_after(?ACK_TIMEOUT_MS, self(), {ack_timeout, From}),
+    {noreply, State#state{
         is_open      = false,
         buffer       = <<>>,
         pending_read = undefined,
-        pending_ack  = undefined
+        pending_ack  = {From, AckTimer, close}
     }}.
 
 handle_cast(_Msg, State) ->
