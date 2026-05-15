@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="dist/html-erlang-7YNYEB7F.css" />
 
-    <script defer src="dist/sidebar_items-8F38B0E8.js"></script>
+    <script defer src="dist/sidebar_items-431E8366.js"></script>
     <script defer src="docs_config.js"></script>
     <script defer src="dist/html-HBZYRXZS.js"></script>
 
@@ -142,6 +142,14 @@ serierl
 
     <div class="summary-row">
       <div class="summary-signature">
+        <a href="#t:pending_ack/0" data-no-tooltip="" translate="no">pending_ack/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
         <a href="#t:serial_option/0" data-no-tooltip="" translate="no">serial_option/0</a>
 
       </div>
@@ -184,7 +192,7 @@ serierl
 
       </div>
 
-        <div class="summary-synopsis"><p>Gracefully closes the serial connection and terminates the C binary.</p></div>
+        <div class="summary-synopsis"><p>Gracefully closes the serial connection.</p></div>
 
     </div>
 
@@ -210,7 +218,7 @@ serierl
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#handle_call/3" data-no-tooltip="" translate="no">handle_call(_, From, State)</a>
+        <a href="#handle_call/3" data-no-tooltip="" translate="no">handle_call(Call, From, State)</a>
 
       </div>
 
@@ -438,6 +446,35 @@ serierl
 
   </section>
 </section>
+<section class="detail" id="t:pending_ack/0">
+
+  <div class="detail-header">
+    <a href="#t:pending_ack/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">pending_ack/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L50" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> pending_ack() ::
+          {From :: <a href="https://www.erlang.org/doc/apps/stdlib/gen_server.html#t:from/0">gen_server:from</a>(), TimerRef :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:reference/0">reference</a>(), AckType :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:atom/0">atom</a>()} | undefined.</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:serial_option/0">
 
   <div class="detail-header">
@@ -554,7 +591,7 @@ serierl
 
       <div class="specs">
 
-          <pre translate="no"><span class="attribute">-type</span> stopbits() :: 1 | '1.5' | 2.</pre>
+          <pre translate="no"><span class="attribute">-type</span> stopbits() :: 1 | 2.</pre>
 
       </div>
 
@@ -584,7 +621,7 @@ serierl
       <h1 class="signature" translate="no">close(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L217" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L229" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -599,7 +636,7 @@ serierl
 
       </div>
 
-<p>Gracefully closes the serial connection and terminates the C binary.</p><p>Instructs the OS to release the file descriptor lock on the hardware device. If any Erlang processes are currently blocked waiting on a read operation, they will be immediately unblocked and receive an {error, closed} response.</p>
+<p>Gracefully closes the serial connection.</p><p>Instructs the OS to release the file descriptor lock on the hardware device. Any Erlang processes currently blocked on a read operation will be unblocked and receive {error, closed}. The gen_server process stays alive and can be re-opened via open/2,3.</p>
   </section>
 </section>
 <section class="detail" id="flush/1">
@@ -612,7 +649,7 @@ serierl
       <h1 class="signature" translate="no">flush(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L208" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L219" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -627,7 +664,7 @@ serierl
 
       </div>
 
-<p>Blocks until the transmission queue is empty.</p><p>Suspends the calling process until the OS confirms that every single byte previously queued via write/2 has been physically transmitted across the serial wire.</p>
+<p>Blocks until the transmission queue is empty.</p><p>Suspends the calling process until the OS confirms that every byte previously queued via write/2 has been physically transmitted across the serial wire.</p>
   </section>
 </section>
 <section class="detail" id="get_signals/1">
@@ -640,7 +677,7 @@ serierl
       <h1 class="signature" translate="no">get_signals(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L183" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L195" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -665,10 +702,10 @@ serierl
       <i class="ri-link-m" aria-hidden="true"></i>
     </a>
     <div class="heading-with-actions">
-      <h1 class="signature" translate="no">handle_call(_, From, State)</h1>
+      <h1 class="signature" translate="no">handle_call(Call, From, State)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L227" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L248" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -690,7 +727,7 @@ serierl
       <h1 class="signature" translate="no">handle_cast(Msg, State)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L328" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L358" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -712,7 +749,7 @@ serierl
       <h1 class="signature" translate="no">handle_info(Info, State)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L331" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L364" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -734,7 +771,7 @@ serierl
       <h1 class="signature" translate="no">init(_)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L222" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L234" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -756,7 +793,7 @@ serierl
       <h1 class="signature" translate="no">open(Pid, PortName)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L72" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L83" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -784,7 +821,7 @@ serierl
       <h1 class="signature" translate="no">open(Pid, PortName, Opts)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L92" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L103" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -812,7 +849,7 @@ serierl
       <h1 class="signature" translate="no">read(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L120" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L132" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -827,7 +864,7 @@ serierl
 
       </div>
 
-<p>Reads all currently buffered data without blocking.</p><p>Instantly retrieves whatever data currently resides in the Erlang gen_server's memory buffer. If no data has been received from the device, it immediately returns an empty binary.</p>
+<p>Reads all currently buffered data without blocking.</p><p>Instantly retrieves whatever data currently resides in the Erlang gen_server's memory buffer. Returns {ok, empty_binary()} if no data has arrived yet.</p>
   </section>
 </section>
 <section class="detail" id="read/2">
@@ -840,7 +877,7 @@ serierl
       <h1 class="signature" translate="no">read(Pid, N)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L131" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L144" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -855,7 +892,7 @@ serierl
 
       </div>
 
-<p>Blocks until exactly N bytes are read.</p><p>Suspends the calling process until the hardware receives exactly the specified number of bytes.</p><p>**Timeout Behavior:** If the timeout duration (configured during open/3) expires before N bytes arrive, the function unblocks and returns whatever partial data was collected up to that point. If no data arrived, it returns {ok, &lt;&lt;&gt;&gt;}.</p>
+<p>Blocks until exactly N bytes are read.</p><p>Suspends the calling process until the hardware receives exactly the specified number of bytes.</p><p>**Timeout Behavior:** If the timeout (configured during open/3) expires before N bytes arrive, returns whatever partial data was collected. Returns {ok, empty_binary()} if nothing arrived.</p>
   </section>
 </section>
 <section class="detail" id="read_until/2">
@@ -868,7 +905,7 @@ serierl
       <h1 class="signature" translate="no">read_until(Pid, Expected)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L152" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L165" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -883,7 +920,7 @@ serierl
 
       </div>
 
-<p>Blocks until a specific binary sequence is encountered.</p><p>Suspends the calling process and continuously buffers incoming data until the exact Expected sequence is found. The returned binary will include the expected sequence at the very end.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before the sequence is found.</p>
+<p>Blocks until a specific binary sequence is encountered.</p><p>Suspends the calling process and continuously buffers incoming data until the exact Expected sequence is found. The returned binary includes the expected sequence at the very end.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before the sequence.</p>
   </section>
 </section>
 <section class="detail" id="readline/1">
@@ -896,7 +933,7 @@ serierl
       <h1 class="signature" translate="no">readline(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L141" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L154" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -911,7 +948,7 @@ serierl
 
       </div>
 
-<p>Blocks until a newline character (\n) is read.</p><p>A convenience wrapper for read_until. Commonly used for reading ASCII-based protocols or AT command responses.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before a newline is encountered.</p>
+<p>Blocks until a newline character (\n) is read.</p><p>A convenience wrapper for read_until. Commonly used for reading ASCII-based protocols or AT command responses.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before a newline.</p>
   </section>
 </section>
 <section class="detail" id="reset_input_buffer/1">
@@ -924,7 +961,7 @@ serierl
       <h1 class="signature" translate="no">reset_input_buffer(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L192" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L203" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -939,7 +976,7 @@ serierl
 
       </div>
 
-<p>Clears all unread data from the input buffers.</p><p>This performs a two-step purge. It instructs the OS to discard any incoming data currently held in the kernel buffer, and then empties the Erlang gen_server memory buffer. Use this to resynchronize communication if the data stream becomes corrupted.</p>
+<p>Clears all unread data from the input buffers.</p><p>Instructs the OS to discard any incoming data currently held in the kernel buffer, then empties the Erlang gen_server memory buffer.</p>
   </section>
 </section>
 <section class="detail" id="reset_output_buffer/1">
@@ -952,7 +989,7 @@ serierl
       <h1 class="signature" translate="no">reset_output_buffer(Pid)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L200" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L211" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -967,7 +1004,7 @@ serierl
 
       </div>
 
-<p>Clears all unwritten data from the output buffer.</p><p>Instructs the OS to instantly discard any data sitting in the kernel's transmission queue that has not yet been physically sent over the wire.</p>
+<p>Clears all unwritten data from the output buffer.</p><p>Instructs the OS to discard any data sitting in the kernel's transmission queue that has not yet been physically sent over the wire.</p>
   </section>
 </section>
 <section class="detail" id="set_dtr/2">
@@ -980,7 +1017,7 @@ serierl
       <h1 class="signature" translate="no">set_dtr(Pid, Value)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L170" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L182" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -1008,7 +1045,7 @@ serierl
       <h1 class="signature" translate="no">set_rts(Pid, Value)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L161" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L173" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -1023,7 +1060,7 @@ serierl
 
       </div>
 
-<p>Sets the state of the Request To Send (RTS) hardware pin.</p><p>Manually forces the RTS line high (true) or low (false). This is only effective if hardware flow control (rtscts) is disabled. If rtscts is true, the OS driver will ignore manual overrides.</p>
+<p>Sets the state of the Request To Send (RTS) hardware pin.</p><p>Manually forces the RTS line high (true) or low (false). Only effective if hardware flow control (rtscts) is disabled.</p>
   </section>
 </section>
 <section class="detail" id="start_link/0">
@@ -1036,7 +1073,7 @@ serierl
       <h1 class="signature" translate="no">start_link()</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L65" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L76" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -1064,7 +1101,7 @@ serierl
       <h1 class="signature" translate="no">terminate(Reason, State)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L355" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L445" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -1086,7 +1123,7 @@ serierl
       <h1 class="signature" translate="no">write(Pid, Data)</h1>
 
 
-        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L111" class="icon-action" rel="help" aria-label="View Source">
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L122" class="icon-action" rel="help" aria-label="View Source">
           <i class="ri-code-s-slash-line" aria-hidden="true"></i>
         </a>
 
@@ -1101,7 +1138,7 @@ serierl
 
       </div>
 
-<p>Writes binary data to the physical serial port.</p><p>Pushes the provided data to the OS-level transmission buffer. This function is synchronous and will block the caller until the data is successfully handed off to the OS, or until the write_timeout (defined in open/3) expires.</p><p>Note: A successful return means the OS accepted the data, not necessarily that the physical hardware has finished transmitting every byte over the wire. Use flush/1 if you need absolute transmission confirmation.</p>
+<p>Writes binary data to the physical serial port.</p><p>Pushes the provided data to the OS-level transmission buffer. This function is synchronous and blocks the caller until the OS confirms the write succeeded, or until write_timeout expires.</p><p>Note: A successful return means the OS accepted the data, not necessarily that the physical hardware has finished transmitting every byte over the wire. Use flush/1 if you need absolute transmission confirmation.</p>
   </section>
 </section>
 

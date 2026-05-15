@@ -127,7 +127,7 @@ write(Pid, Data) ->
 %% @doc Reads all currently buffered data without blocking.
 %%
 %% Instantly retrieves whatever data currently resides in the Erlang gen_server's
-%% memory buffer. Returns {ok, <<>>} if no data has arrived yet.
+%% memory buffer. Returns {ok, empty_binary()} if no data has arrived yet.
 -spec read(pid()) -> {ok, binary()}.
 read(Pid) ->
     gen_server:call(Pid, read_all).
@@ -138,7 +138,7 @@ read(Pid) ->
 %% number of bytes.
 %%
 %% **Timeout Behavior:** If the timeout (configured during open/3) expires before N
-%% bytes arrive, returns whatever partial data was collected. Returns {ok, <<>>} if
+%% bytes arrive, returns whatever partial data was collected. Returns {ok, empty_binary()} if
 %% nothing arrived.
 -spec read(pid(), pos_integer()) -> {ok, binary()} | {error, term()}.
 read(Pid, N) when is_integer(N), N > 0 ->

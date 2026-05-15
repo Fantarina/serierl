@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.39.1">
+    <meta name="project" content="serierl v0.1.0">
+
+
+    <title>Introduction — serierl v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-7YNYEB7F.css" />
+
+    <script defer src="dist/sidebar_items-431E8366.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-HBZYRXZS.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+serierl
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-extra" id="main" data-type="extras">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of serierl</span>
+            <div class="search-input-wrapper">
+              <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+                <i class="ri-close-line ri-lg" title="Cancel search"></i>
+              </button>
+            </div>
+          </label>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <div class="engine-selector" data-multiple="false">
+          <button type="button" class="engine-button" aria-label="Select search engine" aria-haspopup="true" aria-expanded="false">
+            <i class="ri-search-2-line" aria-hidden="true"></i>
+            <span class="engine-name">Default</span>
+            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+          </button>
+          <div class="engine-dropdown" hidden role="menu">
+
+              <button type="button"
+                      class="engine-option"
+                      data-engine-url="search.html?q="
+                      role="menuitemradio"
+                      aria-checked="true">
+                <span class="name">Default</span>
+                <span class="help">In-browser search</span>
+              </button>
+
+          </div>
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>Understanding Serial Communication &amp; Serierl</h1>
+
+
+      <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/guide/introduction.md#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+
+<p>This guide explains the fundamentals of serial communication, how the hardware operates, and how the <code class="inline">serierl</code> application processes data between the Erlang Virtual Machine and external hardware devices.</p><hr class="thin"/><h2 id="1-what-is-a-serial-device" class="section-heading"><a href="#1-what-is-a-serial-device" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">1. What is a Serial Device?</span></h2><p>A serial device uses a communication interface that transmits data sequentially, exactly one bit at a time, over a single communication channel or wire. This contrasts with parallel communication, where multiple bits are sent simultaneously over multiple wires.</p><p>Modern serial devices typically use the <strong>UART</strong> (Universal Asynchronous Receiver-Transmitter) hardware protocol. &quot;Asynchronous&quot; means there is no shared clock signal wire between the sender and receiver. Instead, both devices must be configured to the exact same timing parameters (baud rate) to understand where one bit ends and the next begins.</p><p>Common examples of serial devices include:</p><ul><li>  <strong>Embedded Systems:</strong> Microcontrollers (Arduino, ESP32, Raspberry Pi UART).</li><li>  <strong>Industrial Equipment:</strong> PLCs, motor controllers, and sensor networks (often using RS-232, RS-485, or Modbus protocols).</li><li>  <strong>Telecommunications:</strong> Cellular modems (GSM/LTE/5G) controlled via AT commands.</li><li>  <strong>USB Adapters:</strong> Devices like FTDI chips that convert a modern USB connection into a legacy hardware UART interface (appearing as <code class="inline">/dev/ttyUSB0</code> or <code class="inline">COM3</code>).</li></ul><hr class="thin"/><h2 id="2-the-serierl-process-flow" class="section-heading"><a href="#2-the-serierl-process-flow" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">2. The Serierl Process Flow</span></h2><p>To guarantee the stability of the Erlang Virtual Machine (BEAM), <code class="inline">serierl</code> strictly isolates hardware operations from Erlang processes. Physical hardware is unpredictable; USB cables can be unplugged during transmission, and OS-level drivers can hang. </p><p><code class="inline">serierl</code> handles this using a split architecture:</p><ol><li> <strong>The Erlang <code class="inline">gen_server</code> (<code class="inline">serierl.erl</code>):</strong> 
+This is the interface your application interacts with. It maintains an internal memory buffer, handles pattern-matching for specific byte sequences (like <code class="inline">read_until</code>), and manages timeout timers using Erlang's native messaging system.</li><li> <strong>The OS Pipe (Erlang Port):</strong>
+The <code class="inline">gen_server</code> communicates with a separate OS process via standard standard streams (stdin/stdout). This acts as a firewall. </li><li> <strong>The C Binary (<code class="inline">serierl_port.c</code>):</strong>
+This is a lightweight, asynchronous C program running directly on the host operating system. It uses <code class="inline">poll()</code> to monitor the physical hardware non-blockingly. It maps Erlang's commands directly to Linux POSIX <code class="inline">termios</code> API calls.</li><li> <strong>The Hardware Device (<code class="inline">/dev/tty*</code>):</strong>
+The physical hardware driver translates the <code class="inline">termios</code> configurations into actual voltage changes on the transmission wire.</li></ol><p><strong>Fault Tolerance:</strong> If the physical serial device suffers a catastrophic failure or the OS driver segfaults, only the isolated C binary crashes. The Erlang VM detects the closed pipe, the <code class="inline">gen_server</code> shuts down cleanly, and the OTP Supervisor can log the error without affecting the rest of your system.</p><hr class="thin"/><h2 id="3-configuration-options-serial_options" class="section-heading"><a href="#3-configuration-options-serial_options" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">3. Configuration Options (<code class="inline">serial_options</code>)</span></h2><p>Because asynchronous serial communication lacks a shared clock, both the Erlang application and the physical hardware must agree on the exact structure of the data frames. </p><p>Here is what each configuration option dictates at the hardware level:</p><h3 id="timing-and-framing" class="section-heading"><a href="#timing-and-framing" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Timing and Framing</span></h3><ul><li>  <strong><code class="inline">baudrate</code></strong> (e.g., <code class="inline">9600</code>, <code class="inline">115200</code>): The speed of transmission, measured in bits per second. This dictates the precise microsecond duration that the hardware will hold a voltage on the wire to represent a <code class="inline">1</code> or a <code class="inline">0</code>. If the sender and receiver have mismatched baud rates, the data will be read as garbage.</li><li>  <strong><code class="inline">bytesize</code></strong> (e.g., <code class="inline">8</code>, <code class="inline">7</code>): The number of data bits in a single frame. The modern standard is <code class="inline">8</code> (one complete byte). Older industrial systems may use <code class="inline">7</code> or <code class="inline">5</code>.</li><li>  <strong><code class="inline">stopbits</code></strong> (e.g., <code class="inline">1</code>, <code class="inline">2</code>): The mandatory idle time at the end of a frame. <code class="inline">1</code> means the line rests for the duration of one bit before the next frame can start. <code class="inline">2</code> doubles this rest period, giving slower hardware more time to process the received byte.</li></ul><h3 id="error-checking" class="section-heading"><a href="#error-checking" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Error Checking</span></h3><ul><li>  <strong><code class="inline">parity</code></strong> (<code class="inline">none</code>, <code class="inline">even</code>, <code class="inline">odd</code>, <code class="inline">mark</code>, <code class="inline">space</code>): A primitive hardware-level error-checking mechanism. If set to <code class="inline">even</code> or <code class="inline">odd</code>, the UART hardware appends an extra bit to the frame to ensure the total number of <code class="inline">1</code> bits is always even or odd. If interference flips a bit on the wire, the receiver's hardware calculates a parity mismatch and silently discards the corrupted byte. <code class="inline">none</code> disables this feature.</li></ul><h3 id="flow-control" class="section-heading"><a href="#flow-control" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">Flow Control</span></h3><p>If a sender transmits data faster than a receiver can process it, internal hardware buffers will overflow, and data will be dropped. Flow control prevents this by allowing the receiver to signal the sender to pause.</p><ul><li>  <strong><code class="inline">xonxoff</code></strong> (Software Flow Control): Uses in-band data. The receiver sends special ASCII characters (<code class="inline">XOFF</code> / 0x13) to pause transmission and (<code class="inline">XON</code> / 0x11) to resume. It requires no extra wiring, but binary data payloads cannot contain the 0x11 or 0x13 bytes, or they will accidentally trigger flow control.</li><li>  <strong><code class="inline">rtscts</code></strong> (Hardware Flow Control): Uses dedicated physical wires (RTS: Request To Send, CTS: Clear To Send). When the receiver's buffer is full, it drops the voltage on the CTS line, instantly pausing the sender at the hardware level. This is highly reliable for fast, binary data transfers.</li><li>  <strong><code class="inline">dsrdtr</code></strong>: Similar to <code class="inline">rtscts</code>, but uses the DTR (Data Terminal Ready) and DSR (Data Set Ready) pins. Often used to signal if a device is physically powered on and connected.</li></ul><h3 id="os-management" class="section-heading"><a href="#os-management" class="hover-link"><i class="ri-link-m" aria-hidden="true"></i></a><span class="text">OS Management</span></h3><ul><li>  <strong><code class="inline">exclusive</code></strong> (Boolean): When <code class="inline">true</code>, requests the operating system to apply a lock on the <code class="inline">/dev/</code> file descriptor. This prevents other OS processes (like a rogue Python script or a terminal emulator) from accidentally opening the same port and intercepting your data.</li><li>  <strong><code class="inline">drop_reads</code></strong> (Boolean): An Erlang-specific optimization. When <code class="inline">true</code>, the Erlang <code class="inline">gen_server</code> actively discards all incoming data from the device. This is useful for memory management if you are only sending commands to a device (like a basic actuator) and do not care about its telemetry responses.</li></ul>
+
+</div>
+
+<div class="bottom-actions" id="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="license.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+License
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+  </div>
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/serierl/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/serierl/0.1.0">Hex Preview</a>
+
+              (<a href="https://preview.hex.pm/preview/serierl/0.1.0/show/guide/introduction.md">current file</a>)
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="serierl.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.39.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

@@ -14,3 +14,4 @@ The project is built using standard standard Rebar3 tooling:
 
 ```bash
 rebar3 compile
+```
