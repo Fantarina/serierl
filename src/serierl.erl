@@ -45,10 +45,17 @@
     cd  => boolean()
 }.
 
-%% pending_ack tracks a caller waiting for a simple ok/error acknowledgement
-%% from the C port (open, modem_set, buffer_op, get_signals, write).
+%% ack_type defines the exact messages we expect back from the C port.
+-type ack_type() :: 
+    write | 
+    modem_set | 
+    get_signals | 
+    close |
+    {open, boolean(), map()} |
+    {buffer_op, integer()}.
+
 -type pending_ack() ::
-    {From :: gen_server:from(), TimerRef :: reference(), AckType :: atom()}
+    {From :: gen_server:from(), TimerRef :: reference(), AckType :: ack_type()}
     | undefined.
 
 -record(state, {
