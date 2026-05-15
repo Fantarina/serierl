@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.39.1">
+    <meta name="project" content="serierl v0.1.0">
+
+
+    <title>serierl — serierl v0.1.0</title>
+
+    <link rel="stylesheet" href="dist/html-erlang-7YNYEB7F.css" />
+
+    <script defer src="dist/sidebar_items-8F38B0E8.js"></script>
+    <script defer src="docs_config.js"></script>
+    <script defer src="dist/html-HBZYRXZS.js"></script>
+
+  </head>
+  <body>
+    <script>(()=>{var t="ex_doc:settings",e="dark";var o="dark",s="light";var E="sidebar_state",n="closed";var r="sidebar_width";var a="sidebar-open";var i=new URLSearchParams(window.location.search),S=i.get("theme")||JSON.parse(localStorage.getItem(t)||"{}").theme;(S===o||S!==s&&window.matchMedia("(prefers-color-scheme: dark)").matches)&&document.body.classList.add(e);var d=sessionStorage.getItem(E),A=d!==n&&!window.matchMedia(`screen and (max-width: ${768}px)`).matches;document.body.classList.toggle(a,A);var c=sessionStorage.getItem(r);c&&document.body.style.setProperty("--sidebarWidth",`${c}px`);var p=/(Macintosh|iPhone|iPad|iPod)/.test(window.navigator.userAgent);document.documentElement.classList.toggle("apple-os",p);})();
+</script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+serierl
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v0.1.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-list-nav" class="sidebar-list-nav" role="tablist" data-extras=""></ul>
+  </div>
+</nav>
+
+<output role="status" id="toast"></output>
+
+<main class="content page-module" id="main" data-type="modules">
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of serierl</span>
+            <div class="search-input-wrapper">
+              <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+              <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+                <i class="ri-close-line ri-lg" title="Cancel search"></i>
+              </button>
+            </div>
+          </label>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <div class="engine-selector" data-multiple="false">
+          <button type="button" class="engine-button" aria-label="Select search engine" aria-haspopup="true" aria-expanded="false">
+            <i class="ri-search-2-line" aria-hidden="true"></i>
+            <span class="engine-name">Default</span>
+            <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+          </button>
+          <div class="engine-dropdown" hidden role="menu">
+
+              <button type="button"
+                      class="engine-option"
+                      data-engine-url="search.html?q="
+                      role="menuitemradio"
+                      aria-checked="true">
+                <span class="name">Default</span>
+                <span class="help">In-browser search</span>
+              </button>
+
+          </div>
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <div class="heading-with-actions top-heading">
+    <h1>
+      <span translate="no">serierl</span> 
+      <small class="app-vsn" translate="no">(serierl v0.1.0)</small>
+
+    </h1>
+
+      <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L3" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+  </div>
+
+
+    <section id="moduledoc">
+<p>An Erlang application to communicate with a serial device. License: Apache 2.0</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:bytesize/0" data-no-tooltip="" translate="no">bytesize/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:parity/0" data-no-tooltip="" translate="no">parity/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:serial_option/0" data-no-tooltip="" translate="no">serial_option/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:serial_options/0" data-no-tooltip="" translate="no">serial_options/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:signal_map/0" data-no-tooltip="" translate="no">signal_map/0</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:stopbits/0" data-no-tooltip="" translate="no">stopbits/0</a>
+
+      </div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#close/1" data-no-tooltip="" translate="no">close(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Gracefully closes the serial connection and terminates the C binary.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#flush/1" data-no-tooltip="" translate="no">flush(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Blocks until the transmission queue is empty.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_signals/1" data-no-tooltip="" translate="no">get_signals(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Retrieves the current boolean state of the hardware input pins.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#handle_call/3" data-no-tooltip="" translate="no">handle_call(_, From, State)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#handle_cast/2" data-no-tooltip="" translate="no">handle_cast(Msg, State)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#handle_info/2" data-no-tooltip="" translate="no">handle_info(Info, State)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#init/1" data-no-tooltip="" translate="no">init(_)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#open/2" data-no-tooltip="" translate="no">open(Pid, PortName)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Opens a connection to a serial port using default 9600 8N1 settings.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#open/3" data-no-tooltip="" translate="no">open(Pid, PortName, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Opens a connection to a serial port with specific hardware configurations.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#read/1" data-no-tooltip="" translate="no">read(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Reads all currently buffered data without blocking.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#read/2" data-no-tooltip="" translate="no">read(Pid, N)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Blocks until exactly N bytes are read.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#read_until/2" data-no-tooltip="" translate="no">read_until(Pid, Expected)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Blocks until a specific binary sequence is encountered.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#readline/1" data-no-tooltip="" translate="no">readline(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Blocks until a newline character (\n) is read.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reset_input_buffer/1" data-no-tooltip="" translate="no">reset_input_buffer(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Clears all unread data from the input buffers.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#reset_output_buffer/1" data-no-tooltip="" translate="no">reset_output_buffer(Pid)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Clears all unwritten data from the output buffer.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#set_dtr/2" data-no-tooltip="" translate="no">set_dtr(Pid, Value)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets the state of the Data Terminal Ready (DTR) hardware pin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#set_rts/2" data-no-tooltip="" translate="no">set_rts(Pid, Value)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Sets the state of the Request To Send (RTS) hardware pin.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#start_link/0" data-no-tooltip="" translate="no">start_link()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Starts the serial port manager process.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#terminate/2" data-no-tooltip="" translate="no">terminate(Reason, State)</a>
+
+      </div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#write/2" data-no-tooltip="" translate="no">write(Pid, Data)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Writes binary data to the physical serial port.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+
+    <div class="types-list">
+<section class="detail" id="t:bytesize/0">
+
+  <div class="detail-header">
+    <a href="#t:bytesize/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">bytesize/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L24" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> bytesize() :: 5 | 6 | 7 | 8.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:parity/0">
+
+  <div class="detail-header">
+    <a href="#t:parity/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">parity/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L22" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> parity() :: none | odd | even | mark | space.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:serial_option/0">
+
+  <div class="detail-header">
+    <a href="#t:serial_option/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">serial_option/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L26" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> serial_option() ::
+          {baudrate, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>()} |
+          {bytesize, <a href="#t:bytesize/0">bytesize</a>()} |
+          {parity, <a href="#t:parity/0">parity</a>()} |
+          {stopbits, <a href="#t:stopbits/0">stopbits</a>()} |
+          {xonxoff, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()} |
+          {rtscts, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()} |
+          {dsrdtr, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()} |
+          {exclusive, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()} |
+          {drop_reads, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()} |
+          {timeout, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:float/0">float</a>() | infinity} |
+          {write_timeout, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:float/0">float</a>() | infinity}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:serial_options/0">
+
+  <div class="detail-header">
+    <a href="#t:serial_options/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">serial_options/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L39" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> serial_options() :: [<a href="#t:serial_option/0">serial_option</a>()].</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:signal_map/0">
+
+  <div class="detail-header">
+    <a href="#t:signal_map/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">signal_map/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L41" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> signal_map() :: #{cts => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>(), dsr => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>(), ri => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>(), cd => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()}.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:stopbits/0">
+
+  <div class="detail-header">
+    <a href="#t:stopbits/0" class="detail-link" data-no-tooltip="" aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">stopbits/0</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L23" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> stopbits() :: 1 | '1.5' | 2.</pre>
+
+      </div>
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+
+    <div class="functions-list">
+<section class="detail" id="close/1">
+
+  <div class="detail-header">
+    <a href="#close/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">close(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L217" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> close(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> ok.</pre>
+
+      </div>
+
+<p>Gracefully closes the serial connection and terminates the C binary.</p><p>Instructs the OS to release the file descriptor lock on the hardware device. If any Erlang processes are currently blocked waiting on a read operation, they will be immediately unblocked and receive an {error, closed} response.</p>
+  </section>
+</section>
+<section class="detail" id="flush/1">
+
+  <div class="detail-header">
+    <a href="#flush/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">flush(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L208" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> flush(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Blocks until the transmission queue is empty.</p><p>Suspends the calling process until the OS confirms that every single byte previously queued via write/2 has been physically transmitted across the serial wire.</p>
+  </section>
+</section>
+<section class="detail" id="get_signals/1">
+
+  <div class="detail-header">
+    <a href="#get_signals/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">get_signals(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L183" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> get_signals(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> {ok, <a href="#t:signal_map/0">signal_map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Retrieves the current boolean state of the hardware input pins.</p><p>Queries the OS for the physical voltage status of the incoming modem control lines. Returns a map containing: * cts: Clear To Send * dsr: Data Set Ready * ri: Ring Indicator * cd: Carrier Detect</p>
+  </section>
+</section>
+<section class="detail" id="handle_call/3">
+
+  <div class="detail-header">
+    <a href="#handle_call/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">handle_call(_, From, State)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L227" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="handle_cast/2">
+
+  <div class="detail-header">
+    <a href="#handle_cast/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">handle_cast(Msg, State)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L328" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="handle_info/2">
+
+  <div class="detail-header">
+    <a href="#handle_info/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">handle_info(Info, State)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L331" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="init/1">
+
+  <div class="detail-header">
+    <a href="#init/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">init(_)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L222" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="open/2">
+
+  <div class="detail-header">
+    <a href="#open/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">open(Pid, PortName)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L72" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> open(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>() | <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Opens a connection to a serial port using default 9600 8N1 settings.</p><p>Equivalent to calling open(Pid, PortName, []).</p>
+  </section>
+</section>
+<section class="detail" id="open/3">
+
+  <div class="detail-header">
+    <a href="#open/3" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">open(Pid, PortName, Opts)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L92" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> open(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>() | <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>(), <a href="#t:serial_options/0">serial_options</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Opens a connection to a serial port with specific hardware configurations.</p><p>This function instructs the underlying C binary to open the POSIX device descriptor (e.g., /dev/ttyUSB0) and apply the requested hardware configurations via the termios API.</p><p>It blocks the calling process until the OS confirms the port is successfully configured.</p><p>**Default Options:** * baudrate: 9600 * bytesize: 8 * parity: none * stopbits: 1 * timeout: 5.0 (seconds) * write_timeout: 5.0 (seconds)</p><p>Returns ok if the hardware is ready, or {error, Reason} (e.g., permission denied, device not found).</p>
+  </section>
+</section>
+<section class="detail" id="read/1">
+
+  <div class="detail-header">
+    <a href="#read/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">read(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L120" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> read(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Reads all currently buffered data without blocking.</p><p>Instantly retrieves whatever data currently resides in the Erlang gen_server's memory buffer. If no data has been received from the device, it immediately returns an empty binary.</p>
+  </section>
+</section>
+<section class="detail" id="read/2">
+
+  <div class="detail-header">
+    <a href="#read/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">read(Pid, N)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L131" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> read(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pos_integer/0">pos_integer</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Blocks until exactly N bytes are read.</p><p>Suspends the calling process until the hardware receives exactly the specified number of bytes.</p><p>**Timeout Behavior:** If the timeout duration (configured during open/3) expires before N bytes arrive, the function unblocks and returns whatever partial data was collected up to that point. If no data arrived, it returns {ok, &lt;&lt;&gt;&gt;}.</p>
+  </section>
+</section>
+<section class="detail" id="read_until/2">
+
+  <div class="detail-header">
+    <a href="#read_until/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">read_until(Pid, Expected)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L152" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> read_until(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Blocks until a specific binary sequence is encountered.</p><p>Suspends the calling process and continuously buffers incoming data until the exact Expected sequence is found. The returned binary will include the expected sequence at the very end.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before the sequence is found.</p>
+  </section>
+</section>
+<section class="detail" id="readline/1">
+
+  <div class="detail-header">
+    <a href="#readline/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">readline(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L141" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> readline(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Blocks until a newline character (\n) is read.</p><p>A convenience wrapper for read_until. Commonly used for reading ASCII-based protocols or AT command responses.</p><p>**Timeout Behavior:** Returns partial data if the timeout expires before a newline is encountered.</p>
+  </section>
+</section>
+<section class="detail" id="reset_input_buffer/1">
+
+  <div class="detail-header">
+    <a href="#reset_input_buffer/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">reset_input_buffer(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L192" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> reset_input_buffer(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Clears all unread data from the input buffers.</p><p>This performs a two-step purge. It instructs the OS to discard any incoming data currently held in the kernel buffer, and then empties the Erlang gen_server memory buffer. Use this to resynchronize communication if the data stream becomes corrupted.</p>
+  </section>
+</section>
+<section class="detail" id="reset_output_buffer/1">
+
+  <div class="detail-header">
+    <a href="#reset_output_buffer/1" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">reset_output_buffer(Pid)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L200" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> reset_output_buffer(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Clears all unwritten data from the output buffer.</p><p>Instructs the OS to instantly discard any data sitting in the kernel's transmission queue that has not yet been physically sent over the wire.</p>
+  </section>
+</section>
+<section class="detail" id="set_dtr/2">
+
+  <div class="detail-header">
+    <a href="#set_dtr/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_dtr(Pid, Value)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L170" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> set_dtr(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Sets the state of the Data Terminal Ready (DTR) hardware pin.</p><p>Manually forces the DTR line high (true) or low (false). Often used to trigger physical resets on connected microcontrollers (e.g., Arduino).</p>
+  </section>
+</section>
+<section class="detail" id="set_rts/2">
+
+  <div class="detail-header">
+    <a href="#set_rts/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">set_rts(Pid, Value)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L161" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> set_rts(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Sets the state of the Request To Send (RTS) hardware pin.</p><p>Manually forces the RTS line high (true) or low (false). This is only effective if hardware flow control (rtscts) is disabled. If rtscts is true, the OS driver will ignore manual overrides.</p>
+  </section>
+</section>
+<section class="detail" id="start_link/0">
+
+  <div class="detail-header">
+    <a href="#start_link/0" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">start_link()</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L65" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> start_link() -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>()} | ignore | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Starts the serial port manager process.</p><p>Spawns the serierl gen_server and immediately launches the isolated OS-level C binary (serierl_port). At this stage, no physical hardware port is opened.</p><p>Returns {ok, Pid} on success.</p>
+  </section>
+</section>
+<section class="detail" id="terminate/2">
+
+  <div class="detail-header">
+    <a href="#terminate/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">terminate(Reason, State)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L355" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="write/2">
+
+  <div class="detail-header">
+    <a href="#write/2" class="detail-link" data-no-tooltip="" aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <div class="heading-with-actions">
+      <h1 class="signature" translate="no">write(Pid, Data)</h1>
+
+
+        <a href="https://github.com/Fantarina/serierl/blob/v0.1.0/src/serierl.erl#L111" class="icon-action" rel="help" aria-label="View Source">
+          <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        </a>
+
+    </div>
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> write(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:pid/0">pid</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:iodata/0">iodata</a>()) -> ok | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Writes binary data to the physical serial port.</p><p>Pushes the provided data to the OS-level transmission buffer. This function is synchronous and will block the caller until the data is successfully handed off to the OS, or until the write_timeout (defined in open/3) expires.</p><p>Note: A successful return means the OS accepted the data, not necessarily that the physical hardware has finished transmitting every byte over the wire. Use flush/1 if you need absolute transmission confirmation.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/serierl/0.1.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/serierl/0.1.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="serierl.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.39.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

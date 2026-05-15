@@ -6,6 +6,8 @@ This project was created because the existing Erlang serial library has a shady 
 
 To ensure minimal restrictions and alignment with the ecosystem, it uses the Apache License 2.0, matching Erlang/OTP.
 
+Surely not production ready but not sure because the human contribution in the code is minimal
+
 ## Building
 
 The project is built using standard standard Rebar3 tooling:
