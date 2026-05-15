@@ -6,7 +6,7 @@ This project was created because the existing Erlang serial library has a licens
 
 To ensure minimal restrictions and alignment with the ecosystem, it uses the Apache License 2.0, matching Erlang/OTP.
 
-Maybe not production ready, lot of things do to, test, improve
+Maybe not production ready, lot of things to do, test, improve
 
 ## Building
 
