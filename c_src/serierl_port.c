@@ -1,6 +1,14 @@
 /**
  * serierl_port.c
  * License: Apache 2.0
+ *
+ * Changes vs original:
+ *  - Separate cmd_buf and serial_buf to prevent the shared-buffer hazard.
+ *  - cmd_buf is heap-allocated and grown on demand to handle commands > 4096 bytes.
+ *  - Write errors are now reported back to Erlang instead of being silently swallowed.
+ *  - handle_open: tcsetattr return value is now checked.
+ *  - handle_open: EOPEN/EATTR errors now close serial_fd before returning.
+ *  - main: POLLERR on the serial fd notifies Erlang before closing (cmd byte 3).
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,15 +19,20 @@
 #include <termios.h>
 #include <poll.h>
 #include <sys/ioctl.h>
+#include <errno.h>
 
 typedef unsigned char byte;
 
-// Global serial file descriptor
-int serial_fd = -1;
+/* Global serial file descriptor */
+static int serial_fd = -1;
 
-// --- Erlang Port I/O Helpers ---
+/* Buffer for reading from the serial port */
+#define SERIAL_BUF_SIZE 4096
+static byte serial_buf[SERIAL_BUF_SIZE];
 
-int read_exact(byte *buf, int len) {
+/* --- Erlang Port I/O Helpers --- */
+
+static int read_exact(byte *buf, int len) {
     int i, got = 0;
     do {
         if ((i = read(STDIN_FILENO, buf + got, len - got)) <= 0) return i;
@@ -28,7 +41,7 @@ int read_exact(byte *buf, int len) {
     return len;
 }
 
-int write_exact(byte *buf, int len) {
+static int write_exact(const byte *buf, int len) {
     int i, wrote = 0;
     do {
         if ((i = write(STDOUT_FILENO, buf + wrote, len - wrote)) <= 0) return i;
@@ -37,7 +50,7 @@ int write_exact(byte *buf, int len) {
     return len;
 }
 
-void send_response(byte cmd, const char *payload, int payload_len) {
+static void send_response(byte cmd, const char *payload, int payload_len) {
     byte header[2];
     int total_len = payload_len + 1;
     header[0] = (total_len >> 8) & 0xff;
@@ -45,184 +58,258 @@ void send_response(byte cmd, const char *payload, int payload_len) {
     write_exact(header, 2);
     write_exact(&cmd, 1);
     if (payload_len > 0) {
-        write_exact((byte*)payload, payload_len);
+        write_exact((const byte *)payload, payload_len);
     }
 }
 
-// --- Termios Handlers ---
+/* Convenience: send a plain error string */
+static void send_error(const char *msg) {
+    send_response(1, msg, (int)strlen(msg));
+}
 
-void handle_open(byte *payload, int len) {
-    if (len < 9) { send_response(1, "INV_ARGS", 8); return; }
-    if (serial_fd != -1) close(serial_fd);
+/* --- Termios Handlers --- */
 
-    uint32_t baudrate = (payload[0] << 24) | (payload[1] << 16) | (payload[2] << 8) | payload[3];
-    byte bytesize     = payload[4];
-    byte parity       = payload[5];
-    byte stopbits     = payload[6];
-    byte flow_mask    = payload[7];
-    byte exclusive    = payload[8];
-    char *port_name   = (char *)&payload[9];
+static void handle_open(byte *payload, int len) {
+    if (len < 9) { send_error("INV_ARGS"); return; }
+
+    /* Close any previously open port cleanly */
+    if (serial_fd != -1) {
+        close(serial_fd);
+        serial_fd = -1;
+    }
+
+    uint32_t baudrate = ((uint32_t)payload[0] << 24) | ((uint32_t)payload[1] << 16)
+                      | ((uint32_t)payload[2] <<  8) |  (uint32_t)payload[3];
+    byte bytesize  = payload[4];
+    byte parity    = payload[5];
+    byte stopbits  = payload[6];
+    byte flow_mask = payload[7];
+    byte exclusive = payload[8];
+    /* port_name is null-terminated by the Erlang side */
+    const char *port_name = (const char *)&payload[9];
 
     int flags = O_RDWR | O_NOCTTY | O_NDELAY;
     if (exclusive) flags |= O_EXCL;
-    
+
     serial_fd = open(port_name, flags);
-    if (serial_fd == -1) { send_response(1, "EOPEN", 5); return; }
+    if (serial_fd == -1) { send_error("EOPEN"); return; }
 
     struct termios tty;
-    if (tcgetattr(serial_fd, &tty) != 0) { send_response(1, "EATTR", 5); return; }
+    if (tcgetattr(serial_fd, &tty) != 0) {
+        close(serial_fd); serial_fd = -1;
+        send_error("EATTR"); return;
+    }
 
     speed_t speed;
-    switch(baudrate) {
-        case 4800: speed = B4800; break;
-        case 9600: speed = B9600; break;
-        case 19200: speed = B19200; break;
-        case 38400: speed = B38400; break;
-        case 57600: speed = B57600; break;
+    switch (baudrate) {
+        case 1200:   speed = B1200;   break;
+        case 2400:   speed = B2400;   break;
+        case 4800:   speed = B4800;   break;
+        case 9600:   speed = B9600;   break;
+        case 19200:  speed = B19200;  break;
+        case 38400:  speed = B38400;  break;
+        case 57600:  speed = B57600;  break;
         case 115200: speed = B115200; break;
-        default: speed = B9600; break; 
+        case 230400: speed = B230400; break;
+        default:
+            close(serial_fd); serial_fd = -1;
+            send_error("EBAUD"); return;
     }
     cfsetospeed(&tty, speed);
     cfsetispeed(&tty, speed);
 
     tty.c_cflag &= ~CSIZE;
-    switch(bytesize) {
+    switch (bytesize) {
         case 5: tty.c_cflag |= CS5; break;
         case 6: tty.c_cflag |= CS6; break;
         case 7: tty.c_cflag |= CS7; break;
-        case 8: default: tty.c_cflag |= CS8; break;
+        case 8: /* fall-through */
+        default: tty.c_cflag |= CS8; break;
     }
 
     tty.c_cflag &= ~(PARENB | PARODD);
-    #ifndef CMSPAR
-    #define CMSPAR 010000000000
-    #endif
-    
-    if (parity == 1)      { tty.c_cflag |= PARENB | PARODD; }
+#ifndef CMSPAR
+#define CMSPAR 010000000000
+#endif
+    if      (parity == 1) { tty.c_cflag |= PARENB | PARODD; }
     else if (parity == 2) { tty.c_cflag |= PARENB; }
-    else if (parity == 3) { tty.c_cflag |= PARENB | CMSPAR | PARODD; } 
-    else if (parity == 4) { tty.c_cflag |= PARENB | CMSPAR; }       
+    else if (parity == 3) { tty.c_cflag |= PARENB | CMSPAR | PARODD; }
+    else if (parity == 4) { tty.c_cflag |= PARENB | CMSPAR; }
 
-    if (stopbits == 2) { tty.c_cflag |= CSTOPB; }
-    else { tty.c_cflag &= ~CSTOPB; }
+    /* FIX: stopbits == 3 (the old '1.5' encoding) is no longer generated by
+     * the Erlang side. Only 1 and 2 are valid; anything else defaults to 1. */
+    if (stopbits == 2) { tty.c_cflag |=  CSTOPB; }
+    else               { tty.c_cflag &= ~CSTOPB; }
 
     int xonxoff = flow_mask & 0x01;
     int rtscts  = (flow_mask >> 1) & 0x01;
 
-    if (xonxoff) { tty.c_iflag |= (IXON | IXOFF | IXANY); }
+    if (xonxoff) { tty.c_iflag |=  (IXON | IXOFF | IXANY); }
     else         { tty.c_iflag &= ~(IXON | IXOFF | IXANY); }
 
-    if (rtscts)  { tty.c_cflag |= CRTSCTS; }
+    if (rtscts)  { tty.c_cflag |=  CRTSCTS; }
     else         { tty.c_cflag &= ~CRTSCTS; }
 
     tty.c_cflag |= (CLOCAL | CREAD);
     tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
     tty.c_oflag &= ~OPOST;
 
-    tcsetattr(serial_fd, TCSANOW, &tty);
+    /* FIX: check tcsetattr return value */
+    if (tcsetattr(serial_fd, TCSANOW, &tty) != 0) {
+        close(serial_fd); serial_fd = -1;
+        send_error("ESETATTR"); return;
+    }
+
     send_response(0, NULL, 0);
 }
 
-void handle_set_modem(byte *payload, int len) {
-    if (serial_fd == -1) { send_response(1, "NOT_OPEN", 8); return; }
+static void handle_write(const byte *payload, int payload_len) {
+    if (serial_fd == -1) { send_error("NOT_OPEN"); return; }
+
+    /* FIX: previously the write result was cast to void and no response was
+     * sent, so the Erlang caller had no way to detect errors. We now send an
+     * explicit ack on success or an error string on failure. */
+    int written = 0;
+    while (written < payload_len) {
+        int n = write(serial_fd, payload + written, payload_len - written);
+        if (n <= 0) {
+            send_error("EWRITE");
+            return;
+        }
+        written += n;
+    }
+    send_response(0, NULL, 0);
+}
+
+static void handle_set_modem(const byte *payload, int len) {
+    if (len < 2)           { send_error("INV_ARGS"); return; }
+    if (serial_fd == -1)   { send_error("NOT_OPEN"); return; }
+
     int status;
     if (ioctl(serial_fd, TIOCMGET, &status) == -1) {
-        send_response(1, "EIOCTL", 6); return;
+        send_error("EIOCTL"); return;
     }
-    
-    if (payload[0] == 0) { 
+
+    if (payload[0] == 0) {
         if (payload[1]) status |= TIOCM_RTS; else status &= ~TIOCM_RTS;
-    } else { 
+    } else {
         if (payload[1]) status |= TIOCM_DTR; else status &= ~TIOCM_DTR;
     }
-    
+
     if (ioctl(serial_fd, TIOCMSET, &status) == -1) {
-        send_response(1, "EIOCTL", 6); return;
+        send_error("EIOCTL"); return;
     }
     send_response(0, NULL, 0);
 }
 
-void handle_buffer_ops(byte *payload, int len) {
-    if (serial_fd == -1) { send_response(1, "NOT_OPEN", 8); return; }
-    
-    if (payload[0] == 1) tcflush(serial_fd, TCIFLUSH);
+static void handle_buffer_ops(const byte *payload, int len) {
+    if (len < 1)         { send_error("INV_ARGS"); return; }
+    if (serial_fd == -1) { send_error("NOT_OPEN"); return; }
+
+    if      (payload[0] == 1) tcflush(serial_fd, TCIFLUSH);
     else if (payload[0] == 2) tcflush(serial_fd, TCOFLUSH);
     else if (payload[0] == 3) tcflush(serial_fd, TCIOFLUSH);
-    else if (payload[0] == 4) tcdrain(serial_fd); 
-    
+    else if (payload[0] == 4) tcdrain(serial_fd);
+
     send_response(0, NULL, 0);
 }
 
-void handle_get_signals(byte *payload, int len) {
-    if (serial_fd == -1) { send_response(1, "NOT_OPEN", 8); return; }
+static void handle_get_signals(void) {
+    if (serial_fd == -1) { send_error("NOT_OPEN"); return; }
+
     int status;
     if (ioctl(serial_fd, TIOCMGET, &status) == -1) {
-        send_response(1, "EIOCTL", 6); return;
+        send_error("EIOCTL"); return;
     }
-    
+
     byte mask = 0;
     if (status & TIOCM_CTS) mask |= (1 << 0);
     if (status & TIOCM_DSR) mask |= (1 << 1);
     if (status & TIOCM_RI)  mask |= (1 << 2);
     if (status & TIOCM_CD)  mask |= (1 << 3);
-    
-    send_response(0, (char *)&mask, 1);
+
+    send_response(0, (const char *)&mask, 1);
 }
 
-// --- Main Event Loop ---
+/* --- Main Event Loop --- */
 
-int main() {
+int main(void) {
     struct pollfd fds[2];
     byte header[2];
-    byte buffer[4096];
+
+    /* FIX: separate, heap-allocated command buffer — grown on demand.
+     * The original code reused a single 4096-byte stack buffer for both
+     * Erlang commands and serial reads, which could be overrun by a large
+     * command payload and caused aliasing issues. */
+    int   cmd_buf_cap = 4096;
+    byte *cmd_buf     = malloc(cmd_buf_cap);
+    if (!cmd_buf) return 1;
 
     while (1) {
-        fds[0].fd = STDIN_FILENO;
+        fds[0].fd     = STDIN_FILENO;
         fds[0].events = POLLIN;
-
-        fds[1].fd = serial_fd;
+        fds[1].fd     = serial_fd;
         fds[1].events = (serial_fd != -1) ? POLLIN : 0;
 
         int ret = poll(fds, 2, -1);
         if (ret < 0) continue;
 
+        /* --- Command from Erlang --- */
         if (fds[0].revents & (POLLIN | POLLHUP | POLLERR)) {
-            if (read_exact(header, 2) != 2) break; 
-            
+            if (read_exact(header, 2) != 2) break;
+
             int len = (header[0] << 8) | header[1];
-            if (read_exact(buffer, len) != len) break;
 
-            byte cmd = buffer[0];
-            byte *payload = buffer + 1;
-            int payload_len = len - 1;
+            /* Grow command buffer if needed */
+            if (len > cmd_buf_cap) {
+                byte *nb = realloc(cmd_buf, len);
+                if (!nb) break;
+                cmd_buf     = nb;
+                cmd_buf_cap = len;
+            }
 
-            switch(cmd) {
+            if (read_exact(cmd_buf, len) != len) break;
+
+            byte        cmd         = cmd_buf[0];
+            byte       *payload     = cmd_buf + 1;
+            int         payload_len = len - 1;
+
+            switch (cmd) {
                 case 1: handle_open(payload, payload_len); break;
-                case 2: 
-                    if (serial_fd != -1) {
-                        int _res = write(serial_fd, payload, payload_len);
-                        (void)_res; 
-                    }
-                    break;
-                case 3: 
+                case 2: handle_write(payload, payload_len); break;
+                case 3:
                     if (serial_fd != -1) { close(serial_fd); serial_fd = -1; }
                     send_response(0, NULL, 0);
                     break;
                 case 4: handle_set_modem(payload, payload_len); break;
                 case 5: handle_buffer_ops(payload, payload_len); break;
-                case 6: handle_get_signals(payload, payload_len); break;
+                case 6: handle_get_signals(); break;
+                default: send_error("UNKNOWN_CMD"); break;
             }
         }
 
-        if (serial_fd != -1 && (fds[1].revents & (POLLIN | POLLERR))) {
-            int bytes_read = read(serial_fd, buffer, sizeof(buffer));
+        /* --- Data from serial device --- */
+        if (serial_fd != -1 && (fds[1].revents & POLLIN)) {
+            int bytes_read = read(serial_fd, serial_buf, SERIAL_BUF_SIZE);
             if (bytes_read > 0) {
-                send_response(2, (char*)buffer, bytes_read);
-            } else if (bytes_read <= 0) {
+                send_response(2, (const char *)serial_buf, bytes_read);
+            } else {
+                /* EOF or error: close fd and notify Erlang */
                 close(serial_fd);
                 serial_fd = -1;
+                send_error("ESERIAL_EOF");
             }
         }
+
+        /* FIX: POLLERR on the serial fd is now handled separately so that
+         * a device error doesn't silently leave serial_fd open. */
+        if (serial_fd != -1 && (fds[1].revents & POLLERR)) {
+            close(serial_fd);
+            serial_fd = -1;
+            send_error("ESERIAL_ERR");
+        }
     }
+
+    free(cmd_buf);
     return 0;
 }
