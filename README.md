@@ -2,11 +2,11 @@
 
 Vibecoded Erlang serial communication app.
 
-This project was created because the existing Erlang serial library has a shady license and its GitHub repository is archived and yellow is ugly. Furthermore their github alternative is not interesting. Screw microsoft but nah.
+This project was created because the existing Erlang serial library has a license I did not like/understand and its GitHub repository is archived and yellow is ugly. Furthermore their github alternative is not interesting. Screw microsoft but not to that point.
 
 To ensure minimal restrictions and alignment with the ecosystem, it uses the Apache License 2.0, matching Erlang/OTP.
 
-Surely not production ready but not sure because the human contribution in the code is minimal
+Maybe not production ready, lot of things do to, test, improve
 
 ## Building
 
